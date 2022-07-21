@@ -136,13 +136,10 @@ class ChangeTextTest {
         device.findObject(By.res(packageName, "userInput")).text = newMessage
         device.findObject(By.res(packageName, "buttonActivity")).click()
 
-        val textView = Espresso.onView(
-            Matchers.allOf(
-                ViewMatchers.withId(R.id.text), ViewMatchers.withText("This is the way"),
-                ViewMatchers.withParent(ViewMatchers.withParent(ViewMatchers.withId(android.R.id.content))),
-                ViewMatchers.isDisplayed()
-            )
-        )
-        textView.check(ViewAssertions.matches(ViewMatchers.withText("This is the way")))
+        waitForPackage(packageName)
+
+        val result = device.findObject(By.res(packageName, "text")).text
+        assertEquals(result, newMessage)
+
     }
 }
